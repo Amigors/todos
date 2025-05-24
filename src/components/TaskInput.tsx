@@ -1,10 +1,4 @@
-import React from "react";
-
-interface TaskInputProps {
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onAdd: () => void;
-}
+import type { TaskInputProps } from "../types";
 
 const TaskInput: React.FC<TaskInputProps> = ({ value, onChange, onAdd }) => {
   const handleKeyPress = (e: React.KeyboardEvent) => {

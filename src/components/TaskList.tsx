@@ -1,13 +1,5 @@
-import React from "react";
 import TaskItem from "./TaskItem";
-import type { Task } from "../types";
-
-interface TaskListProps {
-  tasks: Task[];
-  onToggle: (id: number) => void;
-  onDelete: (id: number) => void;
-  title: string;
-}
+import type { TaskListProps } from "../types";
 
 const TaskList: React.FC<TaskListProps> = ({
   tasks,

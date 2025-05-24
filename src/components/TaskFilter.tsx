@@ -1,10 +1,4 @@
-import React from "react";
-import type { FilterType } from "../types";
-
-interface TaskFilterProps {
-  currentFilter: FilterType;
-  setFilter: (filter: FilterType) => void;
-}
+import type { TaskFilterProps } from "../types";
 
 const TaskFilter: React.FC<TaskFilterProps> = ({
   currentFilter,

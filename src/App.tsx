@@ -1,56 +1,65 @@
-import React from "react";
+import { useState } from "react";
 import TaskInput from "./components/TaskInput";
 import TaskList from "./components/TaskList";
-import { useTasks } from "./hooks/useTasks";
 import "./App.css";
 import TaskFilter from "./components/TaskFilter";
+import { useTasks } from "./contexts/TaskContext";
 
 const App: React.FC = () => {
   const {
     tasks,
-    newTaskText,
-    setNewTaskText,
+    filteredTasks,
+    activeTasks,
+    filter,
     addTask,
     toggleTask,
     deleteTask,
     clearCompleted,
-    filter,
     setFilter,
-    filteredTasks,
   } = useTasks();
 
-  const activeTasks = tasks.filter((task) => !task.completed);
+  const [newTaskText, setNewTaskText] = useState("");
+
+  const handleAddTask = () => {
+    if (newTaskText.trim()) {
+      addTask(newTaskText.trim());
+      setNewTaskText("");
+    }
+  };
 
   return (
     <div className="app">
-      <h1>todos</h1>
+      <h1>ToDo App</h1>
       <TaskInput
         value={newTaskText}
         onChange={(e) => setNewTaskText(e.target.value)}
-        onAdd={addTask}
-      />
-
-      <TaskList
-        tasks={filteredTasks}
-        onToggle={toggleTask}
-        onDelete={deleteTask}
-        title={
-          filter === "all"
-            ? "Все задачи"
-            : filter === "active"
-            ? "Активные задачи"
-            : "Завершенные задачи"
-        }
+        onAdd={handleAddTask}
       />
 
       {tasks.length > 0 && (
-        <div className="stats">
-          <span className="remain-count">осталось: {activeTasks.length}</span>
+        <>
           <TaskFilter currentFilter={filter} setFilter={setFilter} />
-          <button onClick={clearCompleted} className="clear-completed-btn">
-            Удалить выполненные
-          </button>
-        </div>
+
+          <TaskList
+            tasks={filteredTasks}
+            onToggle={toggleTask}
+            onDelete={deleteTask}
+            title={
+              filter === "all"
+                ? "Все задачи"
+                : filter === "active"
+                ? "Активные задачи"
+                : "Завершенные задачи"
+            }
+          />
+
+          <div className="stats">
+            <span className="remain-count">Осталось: {activeTasks.length}</span>
+            <button onClick={clearCompleted} className="clear-completed-btn">
+              Удалить выполненные
+            </button>
+          </div>
+        </>
       )}
     </div>
   );
